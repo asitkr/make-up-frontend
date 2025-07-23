@@ -205,7 +205,7 @@ const Gallery = forwardRef<HTMLDivElement, GalleryProps>((props, ref) => {
               </div>
 
               <div className="w-full lg:w-[60%]">
-                <div className="w-full py-3 my-6 lg:bg-[#F7EBEE]">
+                <div className="w-full py-3 my-6 lg:my-0 lg:bg-[#F7EBEE]">
                   <div
                     className="w-full flex justify-center items-center h-[380px] lg:h-[800px] py-20 relative overflow-hidden bg-white lg:bg-[#F7EBEE]"
                   >
