@@ -5,7 +5,6 @@ import instagramIcon from '../assets/social/instagram.svg';
 import { currentYear } from '../utils.ts';
 
 const Footer: React.FC = () => {
-
   return (
     <div className="w-full px-4 lg:px-20 pt-10 pb-8 bg-bgColorPrimary">
       <div className="w-full flex items-center justify-between">

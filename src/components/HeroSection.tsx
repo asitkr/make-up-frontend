@@ -8,6 +8,7 @@ const ModalCard = lazy(() => import("./modals/ModalCard.tsx"));
 const HeroSection: React.FC = () => {
     const [openModal,setOpenModal]=useState(false);
     const [cardDetails,setCardDetails]=useState({title:"",key:""})
+    
     return (
        <>
        {openModal&&<ModalCard cardDetails={cardDetails} onClose={()=>setOpenModal(false) }/>} 

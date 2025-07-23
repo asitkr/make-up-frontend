@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { contactUsPhrases } from "../lib/heroSectionData.ts";
 
-const RollingText = () => {
+const RollingText: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isMidOpacity, setIsMidOpacity] = useState(false);

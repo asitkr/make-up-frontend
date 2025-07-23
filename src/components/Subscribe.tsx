@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 const Button = lazy(() => import("../components/dynamicComponents/Button.tsx"));
 
-export default function Subscribe() {
+const Subscribe: React.FC = () => {
   return (
     <div className='w-full px-4 lg:px-20 py-4 lg:py-20'>
       <p className='text-sm sm:text-[28px] font-semibold text-primary py-6 sm:pb-16'>Subscribe For Newsletters</p>
@@ -27,3 +27,5 @@ export default function Subscribe() {
     </div>
   )
 }
+
+export default Subscribe;

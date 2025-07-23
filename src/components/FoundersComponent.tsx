@@ -4,7 +4,7 @@ import founder2 from "../assets/founder/founder2.svg";
 
 const founders = [founder1, founder2]
 
-export default function FoundersComponent() {
+const FoundersComponent: React.FC = () => {
   return (
     <div className="w-full pt-3 lg:pt-6 sm:pt-20 px-4 lg:px-20 bg-[#F3F3F3]">
       <h2 className="text-primary font-semibold text-sm sm:text-[28px]">{foundersSection?.heading}</h2>
@@ -33,3 +33,5 @@ export default function FoundersComponent() {
     </div>
   )
 }
+
+export default FoundersComponent;
