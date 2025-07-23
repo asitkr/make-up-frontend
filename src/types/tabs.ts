@@ -1,12 +1,12 @@
-export interface TabData<T> {
-    tabName: string;
-    cardData: T[];
+export interface UnderlineTabData<T> {
+  tabName: string;
+  cardData: T[];
 }
 
 export interface UnderlineTabsProps<T> {
-    data: TabData<T>[];
-    defaultActiveTab?: string | number | null;
-    onTabChange?: (tabId: string | number) => void;
-    className?: string;
-    Component: React.ComponentType<T>;
+  data: UnderlineTabData<T>[];
+  defaultActiveTab?: string | null;
+  onTabChange?: (tabId: number | string) => void;
+  className?: string;
+  Component: React.ComponentType<T>;
 }
