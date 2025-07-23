@@ -53,3 +53,19 @@ export interface OrderComponentProps {
 export interface CardFormProps {
   register: UseFormRegister<PaymentFormValues>;
 }
+
+export interface ServiceCard {
+  image: string;
+  title: string;
+  description: string;
+  price: string;
+}
+
+type CardType = "horizontal" | "vertical";
+
+export interface ModalCardItem<T> {
+  title: string;
+  Component: React.FC<{ data: T[] }>;
+  data: T[];
+  type: CardType;
+}

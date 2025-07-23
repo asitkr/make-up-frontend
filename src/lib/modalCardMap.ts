@@ -1,11 +1,11 @@
-import  HorizontalCard   from "../Components/cards/HorizontalCard";
-import  VerticalCard  from "../Components/cards/VerticalCard";
-import { facialServices } from "./facialServicesData";
-import { profmakeupServices } from "./profMakeUp";
-import { professionalMehendiCardData } from "./mehendiData";
-import { waxingCardData } from "./waxingData";
-import { manicureAndPedicureCardData } from "./manicAndPadiData";
-import { bleachAndDetanCardData } from "./bleachData";
+import  HorizontalCard   from "../components/cards/HorizontalCard.tsx";
+import  VerticalCard  from "../components/cards/VerticalCard.tsx";
+import { facialServices } from "./facialServicesData.ts";
+import { profmakeupServices } from "./profMakeUp.ts";
+import { professionalMehendiCardData } from "./mehendiData.ts";
+import { waxingCardData } from "./waxingData.ts";
+import { manicureAndPedicureCardData } from "./manicAndPadiData.ts";
+import { bleachAndDetanCardData } from "./bleachData.ts";
 
 interface ModalCardItem {
   title: string;
