@@ -4,8 +4,8 @@ import { ArrowLeftStartOnRectangleIcon, Bars3Icon, XMarkIcon } from "@heroicons/
 
 import { navbarData } from "../lib/navbarData";
 import type { HeaderProps } from "../types/header.ts";
-import { logout } from "../apis/api.ts";
 import toast from "react-hot-toast";
+import { useAuth } from "../hooks/auth.ts";
 
 const UserPopup = lazy(() => import("./modals/UserPopup.tsx"));
 const Modal = lazy(() => import("./dynamicComponents/Modal.tsx"));
@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [logoutPopUp, setLogoutPopUp] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {logout}=useAuth()
 
   console.log("User in Header:", user?.fullName);
   console.log("User in Header:", user);
@@ -36,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
      try {
       const res=await logout();
       console.log(res)
-      if(res["status"])toast.success("Logout Successfully!")
+      toast.success("Logout Successfully!")
     } catch (error) {
       console.log(error)
     }finally{
