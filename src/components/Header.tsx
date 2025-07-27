@@ -17,9 +17,6 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
   const [logoutPopUp, setLogoutPopUp] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  console.log("User in Header:", user?.fullName);
-  console.log("User in Header:", user);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
     setShowName(prev => !prev);

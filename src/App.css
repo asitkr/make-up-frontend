@@ -162,3 +162,30 @@
     }
   }
 }
+
+/* cart */
+/* @keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.animate-ripple1 {
+  animation: ripple 2s linear infinite;
+}
+
+.animate-ripple2 {
+  animation: ripple 2s linear infinite;
+  animation-delay: 0.4s;
+}
+
+.animate-ripple3 {
+  animation: ripple 2s linear infinite;
+  animation-delay: 0.8s;
+} */

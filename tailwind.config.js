@@ -37,6 +37,17 @@ export default {
         syncopate: ['Syncopate', 'sans-serif'],
       }
     },
+    extend: {
+      animation: {
+        ripple: "ripple 1.8s infinite",
+      },
+      keyframes: {
+        ripple: {
+          "0%": { transform: "scale(0)", opacity: "0.6" },
+          "100%": { transform: "scale(1.8)", opacity: "0" },
+        },
+      },
+    },
   },
   plugins: [],
 }
