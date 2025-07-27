@@ -1,11 +1,9 @@
 import { lazy } from "react";
+
 import LogoutGifImage from "../../assets/gif/logout.gif";
+import type { LogoutModalProps } from "../../types/modal.ts";
 
 const Button = lazy(() => import("../dynamicComponents/Button"));
-
-interface LogoutModalProps {
-    onClick: () => void;
-}
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ onClick }) => {
     return (
@@ -16,7 +14,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClick }) => {
 
             <p className="text-primary text-base leading-6 font-normal">Are you sure, you want to log out?</p>
 
-            <div className="w-full pt-9 flex items-center gap-4">
+            <div className="w-full pt-9 flex items-center lg:justify-center gap-4">
                 <Button name="Log Out" className="w-[165px] py-[6px] !bg-transparent border border-primary !text-primary rounded" />
                 <Button name="Cancel" className="w-[165px] py-[6px] rounded" onClick={onClick} />
             </div>

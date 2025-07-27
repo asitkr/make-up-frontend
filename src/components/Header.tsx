@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
 import { lazy, useEffect, useState } from "react";
-import { navbarData } from "../lib/navbarData";
 import { ArrowLeftStartOnRectangleIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
 
+import { navbarData } from "../lib/navbarData";
+import type { HeaderProps } from "../types/header.ts";
+
+const UserPopup = lazy(() => import("./modals/UserPopup.tsx"));
 const Modal = lazy(() => import("./dynamicComponents/Modal.tsx"));
 const LogoutModal = lazy(() => import("./modals/LogoutModal.tsx"));
 const Button = lazy(() => import("./dynamicComponents/Button.tsx"));
 
-const Header: React.FC = () => {
+const Header: React.FC<HeaderProps> = ({ user }) => {
   const [showName, setShowName] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [logoutPopUp, setLogoutPopUp] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  console.log("User in Header:", user?.fullName);
+  console.log("User in Header:", user);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
@@ -46,7 +53,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={`w-full sticky top-0 left-0 z-50 px-4 lg:px-20 transition-all duration-300 
-      ${scrolled ? `bg-white opacity-80 shadow-md ${(isMobileMenuOpen || logoutPopUp) && "!opacity-100"}` : `bg-[#F1E9E5] lg:bg-transparent opacity-100`}`}>
+      ${scrolled ? `bg-white opacity-80 shadow-md ${(isMobileMenuOpen || logoutPopUp || showPopup) && "!opacity-100"}` : `bg-[#F1E9E5] lg:bg-transparent opacity-100`}`}>
       <nav className="w-full flex items-center justify-between py-4">
         <Link to="/" className="font-bold text-primary text-[22px] leading-[26px] font-syncopate">Makeover</Link>
 
@@ -58,7 +65,23 @@ const Header: React.FC = () => {
           ))}
         </div>
 
-        <Button link="/sign-up" className="px-6 py-3 rounded-sm leading-6 font-semibold hidden lg:block" name="Login/Register" />
+        <Button
+          link={user?.fullName ? "" : "/sign-up"}
+          className={`w-40 px-6 py-3 rounded-sm leading-6 font-semibold hidden lg:block text-center ${user?.fullName && "bg-transparent !rounded !text-primary border border-primary"}`}
+          name={user?.fullName ? user?.fullName : "Login/Register"}
+          onClick={() => setShowPopup(true)}
+        />
+
+        {
+          showPopup && (
+            <UserPopup
+              username={user?.fullName}
+              onLogout={handleLogOut}
+              // handleLogOut={handleLogOut}
+              onClose={() => setShowPopup(false)}
+            />
+          )
+        }
 
         <Bars3Icon onClick={toggleMobileMenu} className="text-primary w-6 h-6 cursor-pointer block lg:hidden" />
       </nav>
@@ -120,12 +143,12 @@ const Header: React.FC = () => {
 
 
       {/* Logout */}
-      <Modal 
-        isOpen={logoutPopUp} 
-        onClose={handleLogOut} 
+      <Modal
+        isOpen={logoutPopUp}
+        onClose={handleLogOut}
         parentClassName="!px-4"
         className="!p-4 !bg-white"
-        >
+      >
         <LogoutModal onClick={handleLogOut} />
       </Modal>
     </header>

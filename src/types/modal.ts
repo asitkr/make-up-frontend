@@ -17,3 +17,7 @@ export interface ModalCardProps {
   cardDetails: CardDetails;
   onClose: () => void;
 }
+
+export interface LogoutModalProps {
+    onClick: () => void;
+}

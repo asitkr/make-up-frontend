@@ -5,10 +5,13 @@ import type { LayoutProps } from "../types/layout.ts";
 const Header = lazy(() => import("./Header.tsx"));
 const Footer = lazy(() => import("./Footer.tsx"));
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, user  }) => {
+
+  console.log(user);
+  
   return (
     <div className="w-full">
-      <Header />
+      <Header user={user} />
       {children}
       <Footer />
     </div>

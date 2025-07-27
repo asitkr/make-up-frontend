@@ -3,13 +3,13 @@ import { axiosInstance } from "./axios.ts";
 
 // Get the authenticated user
 export const getAuthUser = async (): Promise<User | null> => {
-    try {
-        const res = await axiosInstance.get<User>("/auth/me");
-        return res.data;
-    } catch (error) {
-        console.error("Error in getAuthUser:", error);
-        return null;
-    }
+  try {
+    const res = await axiosInstance.get("/auth/me");
+    return res.data.user; // ✅ Only return the user object
+  } catch (error) {
+    console.error("Error in getAuthUser:", error);
+    return null;
+  }
 };
 
 // Signup request

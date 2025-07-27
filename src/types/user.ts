@@ -25,3 +25,10 @@ export interface AuthContextType {
     logout: () => Promise<void>;
     refetchUser: () => void;
 }
+
+export interface UserPopupProps {
+  username?: string;
+  onLogout: () => void;
+  onClose: () => void;
+//   handleLogOut: () => void;
+}
