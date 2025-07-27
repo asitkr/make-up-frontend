@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { ButtonProps } from "../../types/button";
+import type { ButtonProps } from "../../types/button.ts";
 
 const Button: React.FC<ButtonProps> = ({
     name,
@@ -8,7 +8,7 @@ const Button: React.FC<ButtonProps> = ({
     onClick,
     type = "button",
     icon = null,
-
+    disabled = false,
 }) => {
 
     return (
@@ -26,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
                         type={type}
                         onClick={onClick}
                         className={`bg-primary text-white ${className}`}
+                        disabled={disabled}
                     >
                         {name}
                         {icon && <span className="pl-1">{icon}</span>}

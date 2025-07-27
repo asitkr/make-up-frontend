@@ -1,33 +1,83 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-type AuthContextType = {
-    isAuthenticated: boolean;
-    login: (token: string) => void;
-    logout: () => void;
-};
+import type { AuthContextType, User } from "../types/user.ts";
+import { getAuthUser, login, logout, signup } from "../apis/api.ts";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const queryClient = useQueryClient();
+
+    const {
+        data,
+        isLoading,
+        isError,
+        error,
+        refetch,
+    } = useQuery({
+        queryKey: ["authUser"],
+        queryFn: getAuthUser,
+        retry: false,
+    });
+
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
-        setIsAuthenticated(!!token);
-    }, []);
+        setUser(data ?? null);
+    }, [data]);
 
-    const login = (token: string) => {
-        localStorage.setItem("authToken", token);
-        setIsAuthenticated(true);
-    };
+    useEffect(() => {
+        if (isError && error instanceof Error) {
+            console.error("Auth error:", error.message);
+        }
+    }, [isError, error]);
 
-    const logout = () => {
-        localStorage.removeItem("authToken");
-        setIsAuthenticated(false);
-    };
+    const signupMutation = useMutation({
+        mutationFn: signup,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["authUser"] });
+        },
+    });
+
+    const loginMutation = useMutation({
+        mutationFn: login,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["authUser"] });
+        },
+    });
+
+    const logoutMutation = useMutation({
+        mutationFn: logout,
+        onSuccess: () => {
+            queryClient.setQueryData(["authUser"], null);
+            setUser(null);
+        },
+    });
+
+    const contextValue = useMemo<AuthContextType>(
+        () => ({
+            user,
+            isAuthenticated: !!user,
+            isLoading,
+            login: async (credentials) => {
+                await loginMutation.mutateAsync(credentials);
+            },
+            signup: async (data) => {
+                await signupMutation.mutateAsync(data);
+            },
+            logout: async () => {
+                await logoutMutation.mutateAsync();
+            },
+            refetchUser: () => {
+                refetch();
+            },
+        }),
+        [user, isLoading, loginMutation, signupMutation, logoutMutation, refetch]
+    );
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

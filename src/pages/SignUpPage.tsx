@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import React, { lazy, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { lazy, useState } from "react";
+import type { AxiosError } from "axios";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
@@ -7,6 +8,8 @@ import Google from "../assets/Google.png";
 import { currentYear } from "../utils.ts";
 import SignUpBanner from "../assets/signin2.webp";
 import type { SignUpInput } from "../types/Sign.ts";
+import { useAuth } from "../hooks/auth.ts";
+import toast from "react-hot-toast";
 
 const InputField = lazy(() => import("../components/dynamicComponents/InputField.tsx"));
 const Button = lazy(() => import("../components/dynamicComponents/Button.tsx"));
@@ -26,6 +29,9 @@ const SignUpPage: React.FC = () => {
             confirmPassword: "",
         },
     });
+    const { signup } = useAuth();
+    const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState(false);
 
@@ -37,8 +43,33 @@ const SignUpPage: React.FC = () => {
         setConfirmPassword((prev) => !prev);
     }
 
-    const onSubmit: SubmitHandler<SignUpInput> = (data) => {
-        console.log("Submitted data:", data);
+    const onSubmit: SubmitHandler<SignUpInput> = async (data) => {
+        setIsSubmitting(true);
+
+        const { ...signupData } = data;
+
+        try {
+            await signup(signupData);
+            toast.success("Account created successfully! Please login.");
+            navigate("/sign-in")
+        } catch (err) {
+            const axiosError = err as AxiosError<{ message: string }>;
+            const serverMessage = axiosError.response?.data?.message;
+
+            toast.dismiss();
+
+            toast.error(
+                <div className="text-xs sm:text-sm text-red-500">
+                    {serverMessage && <div>{serverMessage}</div>}
+                    <div>Signup failed. Please try again.</div>
+                </div>,
+                {
+                    duration: 3000,
+                }
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -72,7 +103,7 @@ const SignUpPage: React.FC = () => {
                                 />
                                 {errors.fullName && (
                                     <p className="text-red-800 text-xs mt-1">
-                                        {errors.fullName.message}
+                                        {errors.fullName?.message}
                                     </p>
                                 )}
                             </div>
@@ -191,6 +222,7 @@ const SignUpPage: React.FC = () => {
                                 <Button
                                     type="submit"
                                     name="Sign Up"
+                                    disabled={isSubmitting}
                                     className="bg-primary block w-full py-4 text-center rounded-xl text-sm sm:text-xl"
                                 />
                             </div>

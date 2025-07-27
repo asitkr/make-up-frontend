@@ -192,11 +192,11 @@ const Gallery = forwardRef<HTMLDivElement, GalleryProps>((props, ref) => {
                   </div>
                 </div>
 
-                <p className="pt-6 lg:pt-60 text-lg text-textBlack300 font-medium">Transform your look and boost your confidence with our premium at-home makeover and makeup services. Whether it’s a glam evening look, bridal makeup, or a flawless everyday glow — our professional artists bring the salon experience to your doorstep, using top-quality products and personalized techniques. Ready to feel your best without stepping out? Tap the button below to enquire now <strong>— your perfect makeover is just a click away!</strong></p>
+                <p className="lg:pt-60 text-xs lg:text-lg text-textBlack300 font-medium">Transform your look and boost your confidence with our premium at-home makeover and makeup services. Whether it’s a glam evening look, bridal makeup, or a flawless everyday glow — our professional artists bring the salon experience to your doorstep, using top-quality products and personalized techniques. Ready to feel your best without stepping out? Tap the button below to enquire now <strong>— your perfect makeover is just a click away!</strong></p>
 
                 <div className="mt-9">
                   <Button
-                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap "
+                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap text-sm"
                     onClick={handleScrollToForm}
                     name="Get In Touch For Personal Assistance"
                     icon={< ArrowLongRightIcon className="w-6 h-6 text-white" />}

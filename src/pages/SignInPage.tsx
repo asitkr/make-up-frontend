@@ -1,5 +1,7 @@
+import toast from "react-hot-toast";
 import { lazy, useState } from "react";
-import { Link } from "react-router-dom";
+import type { AxiosError } from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
 
@@ -7,6 +9,7 @@ import { currentYear } from "../utils.ts";
 import Google from "../assets/Google.png";
 import SignInBanner from "../assets/signin1.webp";
 import type { SignInInput } from "../types/Sign.ts";
+import { useAuth } from "../hooks/auth.ts";
 
 const InputField = lazy(() => import("../components/dynamicComponents/InputField.tsx"));
 const Button = lazy(() => import("../components/dynamicComponents/Button.tsx"));
@@ -23,14 +26,42 @@ const SignInPage: React.FC = () => {
             password: "",
         },
     });
+    const { login } = useAuth();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleShowPassword = () => {
         setShowPassword((prev) => !prev);
     }
 
-    const onSubmit: SubmitHandler<SignInInput> = (data) => {
-        console.log("Submitted data:", data);
+    const onSubmit: SubmitHandler<SignInInput> = async (data) => {
+        setIsSubmitting(true);
+
+        try {
+        await login(data);
+
+        // Dismiss existing toasts and show success
+        toast.dismiss();
+        toast.success("Login successful!", { duration: 3000 });
+
+        // Redirect to home or dashboard
+        navigate("/");
+    } catch (err) {
+        const axiosError = err as AxiosError<{ message?: string }>;
+        const serverMessage = axiosError.response?.data?.message;
+
+        toast.dismiss();
+        toast.error(
+            <div className="text-xs sm:text-sm text-red-500">
+                {serverMessage && <div>{serverMessage}</div>}
+                <div>Login failed. Please try again.</div>
+            </div>,
+            { duration: 3000 }
+        );
+    } finally {
+        setIsSubmitting(false);
+    }
     };
 
     return (
@@ -128,7 +159,11 @@ const SignInPage: React.FC = () => {
                             </Link>
 
                             <div className="w-full mt-6">
-                                <Button type="submit" name="Sign in" className="bg-primary block w-full py-4 text-center rounded-xl text-sm sm:text-xl" />
+                                <Button 
+                                    type="submit" 
+                                    name="Sign in" 
+                                    disabled={isSubmitting}
+                                    className="bg-primary block w-full py-4 text-center rounded-xl text-sm sm:text-xl" />
                             </div>
                         </form>
 
