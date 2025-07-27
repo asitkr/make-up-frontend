@@ -196,7 +196,7 @@ const Gallery = forwardRef<HTMLDivElement, GalleryProps>((props, ref) => {
 
                 <div className="mt-9">
                   <Button
-                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap text-sm"
+                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap rounded-sm text-sm"
                     onClick={handleScrollToForm}
                     name="Get In Touch For Personal Assistance"
                     icon={< ArrowLongRightIcon className="w-6 h-6 text-white" />}
