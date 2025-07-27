@@ -49,7 +49,10 @@ const HomePage: React.FC = () => {
       />
       <CustomerTestimony />
       <ContactUs />
-      <Update/>
+
+      {
+        layoutUser && <Update/>
+      }
     </Layout>
   );
 };

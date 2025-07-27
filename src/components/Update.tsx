@@ -1,21 +1,24 @@
 import { updateData } from "../lib/updateData.ts"
+import UpdateImage from "../assets/update.png";
 
 const Update = () => {
     return (
-        <div className="flex pt-[80px] gap-[80px] mb-[200px]">
-            <div className='w-[738px]'>
-                <p className='text-xl text-primary font-medium pt-[123px] leading-[48px]'>{updateData.title}</p>
-                <p className='text-[40px] leading-[72px]'>{updateData.subTitle}</p>
-                <p className='text-lg leading-7'>{updateData.description}</p>
+        <div className="w-full flex flex-col lg:flex-row px-4 lg:px-20 py-6 lg:py-20 gap-6 lg:gap-20 items-center">
+            <div className='w-full lg:w-2/3'>
+                <p className='text-sm lg:text-xl text-primary font-medium leading-7'>{updateData.title}</p>
+                <p className='pt-3 text-xl lg:text-[40px] text-textBlack200 font-normal leading-tight xl:leading-[72px]'>
+                    {updateData.subTitle}
+                </p>
+                <p className='pt-3 lg:pt-6 text-xs lg:text-base md:text-lg lg:leading-7 text-black font-normal'>
+                    {updateData.description}
+                </p>
             </div>
-            <div className='w-[522px] flex relative'>
-                {Object.values(updateData.images).map((img, index) => (
-                    <img key={index} src={img} alt={`mobile-${index}`} className={`absolute w-[260px] md:w-[280px] transition-all
-                        ${index === 1 ? "top-0 left-[10%] z-10" : "top-0 left-[35%] z-20"}`} loading="lazy" />
-                ))}
+
+            <div className='w-full lg:w-1/3 flex justify-center relative max-h-[400px] md:max-h-[500px]'>
+                <img src={UpdateImage} alt="update" className="w-[350px] lg:w-[500px] h-full" />
             </div>
         </div>
     )
 }
 
-export default Update
+export default Update;
