@@ -70,7 +70,7 @@ const Gallery = forwardRef<HTMLDivElement, GalleryProps>((props, ref) => {
             <div className="w-full py-6 lg:py-20 px-2 lg:px-20">
               <p className="font-semibold text-sm lg:text-xl text-primary lg:leading-8">Makeover Gallery</p>
               <p className="text-lg lg:text-[44px] lg:leading-[62px] whitespace-wrap xl:whitespace-nowrap">We have created amazing stories for our customers!</p>
-              <p className="my-1 text-xs md:text-lg lg:text-lg lg:leading-7">100% Satisfaction Rate, We always want you to look fabulous and we always thrive to be the best~</p>
+              <p className="my-1 text-xs md:text-lg lg:text-lg lg:leading-7 text-lightText">100% Satisfaction Rate, We always want you to look fabulous and we always thrive to be the best~</p>
 
               {/* === Mobile Tabs === */}
               <div className="w-full flex items-center justify-between lg:hidden pt-4">
@@ -196,7 +196,7 @@ const Gallery = forwardRef<HTMLDivElement, GalleryProps>((props, ref) => {
 
                 <div className="mt-9">
                   <Button
-                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap text-sm"
+                    className="w-full md:w-[343px] bg-primary px-6 py-3 flex items-center justify-center whitespace-nowrap rounded-sm text-sm"
                     onClick={handleScrollToForm}
                     name="Get In Touch For Personal Assistance"
                     icon={< ArrowLongRightIcon className="w-6 h-6 text-white" />}
