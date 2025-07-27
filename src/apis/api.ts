@@ -25,7 +25,9 @@ export const login = async (loginData: LoginCredentials): Promise<User> => {
 };
 
 // Logout request
-export const logout = async (): Promise<{ message: string }> => {
+export const logout = async (): Promise<{
+  status: number; message: string 
+}> => {
     const res = await axiosInstance.post<{ message: string }>("/auth/logout");
     return res.data;
 };

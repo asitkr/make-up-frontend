@@ -4,6 +4,8 @@ import { ArrowLeftStartOnRectangleIcon, Bars3Icon, XMarkIcon } from "@heroicons/
 
 import { navbarData } from "../lib/navbarData";
 import type { HeaderProps } from "../types/header.ts";
+import { logout } from "../apis/api.ts";
+import toast from "react-hot-toast";
 
 const UserPopup = lazy(() => import("./modals/UserPopup.tsx"));
 const Modal = lazy(() => import("./dynamicComponents/Modal.tsx"));
@@ -25,9 +27,22 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
     setShowName(prev => !prev);
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async() => {
     setIsMobileMenuOpen(false);
     setLogoutPopUp(prev => !prev);
+  }
+
+  const handleModalLogout=async()=>{
+     try {
+      const res=await logout();
+      console.log(res)
+      if(res["status"])toast.success("Logout Successfully!")
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLogoutPopUp(prev=>!prev)
+      setShowPopup(prev=>!prev)
+    }
   }
 
   useEffect(() => {
@@ -149,7 +164,7 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
         parentClassName="!px-4"
         className="!p-4 !bg-white"
       >
-        <LogoutModal onClick={handleLogOut} />
+        <LogoutModal onClick={handleLogOut} onClickLogOut={handleModalLogout}/>
       </Modal>
     </header>
   )

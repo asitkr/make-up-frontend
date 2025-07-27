@@ -20,4 +20,5 @@ export interface ModalCardProps {
 
 export interface LogoutModalProps {
     onClick: () => void;
+    onClickLogOut:()=> void
 }
